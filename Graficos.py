@@ -12,7 +12,7 @@ def dibujar_tablero(screen, window_width, window_height):
                 pygame.draw.rect(screen, "purple", (columna, fila, window_width / 8, window_height / 8))
                 blanco = False
             else:
-                pygame.draw.rect(screen, "green", (columna, fila, window_width / 8, window_height / 8))
+                pygame.draw.rect(screen, "pink", (columna, fila, window_width / 8, window_height / 8))
                 blanco = True
             columna += window_height / 8
         if blanco:
@@ -24,14 +24,14 @@ def dibujar_tablero(screen, window_width, window_height):
 
 
 #graficos piezas
-def split_image_in_memory(image_path, chunk_size, new_size=None):
+def split_image_in_memory(image_path, chunk_width, chunk_height, new_size=None):
     image = Image.open(image_path)
     chunks = []
 
     width, height = image.size
-    for i in range(0, width, chunk_size):
-        for j in range(0, height, chunk_size):
-            box = (i, j, i + chunk_size, j + chunk_size)
+    for i in range(0, width, chunk_width):
+        for j in range(0, height, chunk_height):
+            box = (i, j, min(i + chunk_width, width), min(j + chunk_height, height))
             chunk = image.crop(box)
             mode = chunk.mode
             size = chunk.size
@@ -43,4 +43,5 @@ def split_image_in_memory(image_path, chunk_size, new_size=None):
             chunks.append(chunk)
 
     return chunks
+
 

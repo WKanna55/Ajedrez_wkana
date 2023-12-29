@@ -28,18 +28,23 @@ while running:
     #generar el tablero
     Graficos.dibujar_tablero(screen, window_width, window_height)
 
-
     # graficos piezas
-    piezas = Graficos.split_image_in_memory('images/piezas.png', chunk_size=333, new_size=(window_width / 8, window_height / 8))
-    #for i, pieza in enumerate(piezas):
-    #    screen.blit(pieza, (100 * (i % 5), 100 * (i // 5)))
-    #    print(i)
-    #    # Ajusta la posición según sea necesario
+    piezas = Graficos.split_image_in_memory('images/piezas.png', chunk_width=334, chunk_height=334, new_size=(window_width / 8, window_height / 8))
+    blancas = []
+    negras = []
+    for i, pieza in enumerate(piezas):
+        if i % 2 == 0:
+            blancas.append(pieza)
+        else:
+            negras.append(pieza)
 
-    screen.blit(piezas[3], (0, 0))
+    for i, blanca in enumerate(blancas):
+        screen.blit(blanca, (i*100, 0))
 
+    for i, negra in enumerate(negras):
+        screen.blit(negra, (i*100, 700))
 
-
+    
 
 
     pygame.draw.circle(screen, "red", player_pos, 40)
