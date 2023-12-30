@@ -44,4 +44,21 @@ def split_image_in_memory(image_path, chunk_width, chunk_height, new_size=None):
 
     return chunks
 
+def piezas_ajedrez(screen, window_width, window_height):
+    piezas = split_image_in_memory('images/piezas.png', chunk_width=334, chunk_height=334,
+                                        new_size=(window_width / 8, window_height / 8))
+    blancas = []
+    negras = []
+    for i, pieza in enumerate(piezas):
+        if i % 2 == 0:
+            blancas.append(pieza)
+        else:
+            negras.append(pieza)
 
+    #for i, blanca in enumerate(blancas):
+    #    screen.blit(blanca, (i * 100, 0))
+#
+    #for i, negra in enumerate(negras):
+    #    screen.blit(negra, (i * 100, 700))
+
+    return blancas, negras

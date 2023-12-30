@@ -29,22 +29,9 @@ while running:
     Graficos.dibujar_tablero(screen, window_width, window_height)
 
     # graficos piezas
-    piezas = Graficos.split_image_in_memory('images/piezas.png', chunk_width=334, chunk_height=334, new_size=(window_width / 8, window_height / 8))
-    blancas = []
-    negras = []
-    for i, pieza in enumerate(piezas):
-        if i % 2 == 0:
-            blancas.append(pieza)
-        else:
-            negras.append(pieza)
+    p_blancas, p_negras = Graficos.piezas_ajedrez(screen, window_width, window_height)
+    screen.blit(p_negras[0], (0, 700))
 
-    for i, blanca in enumerate(blancas):
-        screen.blit(blanca, (i*100, 0))
-
-    for i, negra in enumerate(negras):
-        screen.blit(negra, (i*100, 700))
-
-    
 
 
     pygame.draw.circle(screen, "red", player_pos, 40)
@@ -68,3 +55,4 @@ while running:
     dt = clock.tick(60) / 1000
 
 pygame.quit()
+
