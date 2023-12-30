@@ -1,7 +1,28 @@
 import pygame
 import random
-import Graficos
 import Piezas
+
+# tablero ajedrez
+def dibujar_tablero(screen, window_width, window_height):
+    fila = 0
+    columna = 0
+    blanco = True
+    for i in range(8):
+        for j in range(8):
+            if blanco:
+                pygame.draw.rect(screen, "purple", (columna, fila, window_width / 8, window_height / 8))
+                blanco = False
+            else:
+                pygame.draw.rect(screen, "pink", (columna, fila, window_width / 8, window_height / 8))
+                blanco = True
+            columna += window_height / 8
+        if blanco:
+            blanco = False
+        else:
+            blanco = True
+        columna = 0
+        fila += window_width / 8
+
 
 def tablero_logico(window_width, window_height):
     tablero = []
@@ -18,26 +39,6 @@ def copiar_tablero(tablero):
         tab2.append(i)
     return tab2
 
-def piezas_dict(window_width, window_height):
-    p_blancas, p_negras = Graficos.piezas_ajedrez(window_width, window_height)
-    piezas = {
-       "k": p_negras[0],
-       "q": p_negras[1],
-       "b": p_negras[2],
-       "n": p_negras[3],
-       "r": p_negras[4],
-       "p": p_negras[5],
-       "K": p_blancas[0],
-       "Q": p_blancas[1],
-       "B": p_blancas[2],
-       "N": p_blancas[3],
-       "R": p_blancas[4],
-       "P": p_blancas[5]
-       # Agrega más imágenes según sea necesario
-    }
-
-    return piezas
-
 def posinicial_fen(tablero_log):
     inicial_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
     split_inicial = inicial_fen.split("/")
@@ -50,15 +51,6 @@ def posinicial_fen(tablero_log):
                 tablero_log[i][j][piece] = tablero_log[i][j].pop("")
             j += 1
     return tablero_log
-
-def mostrar_piezas(tablero_ordenado, piezas_img):
-    piezas_pos = []
-    for i in tablero_ordenado:
-        for j in i:
-            for k, v in j.items():
-                if k != "":
-                    piezas_pos.append(Piezas.Piezas().obtain_piece(piezas_img[k], v, k))
-    return piezas_pos
 
 
 #piezas_img = piezas_dict(800,800)

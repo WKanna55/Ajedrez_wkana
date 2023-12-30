@@ -1,9 +1,7 @@
 # Example file showing a circle moving on screen
 import pygame
-from PIL import Image
-import Graficos
-import Logica
 import Piezas
+import Tablero
 import os
 
 # pygame setup
@@ -18,11 +16,11 @@ dt = 0
 """generar cuadro para mover con drag and drop"""
 # Crear las instancias de DraggableImage
 """graficos piezas"""
-piezas_img = Logica.piezas_dict(800,800)
-tablero = Logica.tablero_logico(800,800)
-tablero = Logica.posinicial_fen(tablero)
+piezas_img = Piezas.piezas_dict(800,800)
+tablero = Tablero.tablero_logico(800,800)
+tablero = Tablero.posinicial_fen(tablero)
 
-piezas_en_tablero = Logica.mostrar_piezas(tablero, piezas_img)
+piezas_en_tablero = Piezas.mostrar_piezas(tablero, piezas_img)
 
 
 while running:
@@ -36,7 +34,7 @@ while running:
             evento.handle_event(event, window_width, window_height)
 
     """generar el tablero"""
-    Graficos.dibujar_tablero(screen, window_width, window_height)
+    Tablero.dibujar_tablero(screen, window_width, window_height)
 
     """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
     # Dibujar cada imagen
