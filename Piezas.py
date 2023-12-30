@@ -2,6 +2,15 @@ import pygame
 from PIL import Image
 
 class Piezas_general:
+    def __init__(self, image, position):
+        self.image = image
+        self.rect = image.get_rect(topleft=position)
+        self.dragging = False
+        self.offset_x = 0
+        self.offset_y = 0
+        self.pos_x_anterior = 0
+        self.pos_y_anterior = 0
+        
     def bring_to_front(self, images):
         """ Mueve esta imagen al frente de la lista. """
         images.remove(self)
@@ -12,14 +21,7 @@ class Piezas_general:
 
 #piezas y movimientos
 class King(Piezas_general):
-    def __init__(self, image, position):
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.dragging = False
-        self.offset_x = 0
-        self.offset_y = 0
-        self.pos_x_anterior = 0
-        self.pos_y_anterior = 0
+
 
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -52,14 +54,6 @@ class King(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
 
 class Queen(Piezas_general):
-    def __init__(self, image, position):
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.dragging = False
-        self.offset_x = 0
-        self.offset_y = 0
-        self.pos_x_anterior = 0
-        self.pos_y_anterior = 0
 
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -92,15 +86,6 @@ class Queen(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
 
 class Bishop(Piezas_general):
-    def __init__(self, image, position):
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.dragging = False
-        self.offset_x = 0
-        self.offset_y = 0
-        self.pos_x_anterior = 0
-        self.pos_y_anterior = 0
-
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
@@ -132,15 +117,6 @@ class Bishop(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
 
 class Knight(Piezas_general):
-    def __init__(self, image, position):
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.dragging = False
-        self.offset_x = 0
-        self.offset_y = 0
-        self.pos_x_anterior = 0
-        self.pos_y_anterior = 0
-
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
@@ -172,15 +148,6 @@ class Knight(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
 
 class Rook(Piezas_general):
-    def __init__(self, image, position):
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.dragging = False
-        self.offset_x = 0
-        self.offset_y = 0
-        self.pos_x_anterior = 0
-        self.pos_y_anterior = 0
-
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
@@ -213,15 +180,6 @@ class Rook(Piezas_general):
                 print("moving rook")
 
 class Pawn(Piezas_general):
-    def __init__(self, image, position):
-        self.image = image
-        self.rect = image.get_rect(topleft=position)
-        self.dragging = False
-        self.offset_x = 0
-        self.offset_y = 0
-        self.pos_x_anterior = 0
-        self.pos_y_anterior = 0
-
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
@@ -252,7 +210,6 @@ class Pawn(Piezas_general):
                 mouse_x, mouse_y = event.pos
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
-
 
 
 def obtain_piece(image, position, piece_char):

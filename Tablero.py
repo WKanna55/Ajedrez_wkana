@@ -18,7 +18,7 @@ class Tablero:
         x1 = 46
         y1 = 265
         vect_drag_pull = [x1, y1]
-        
+
 
 
 
