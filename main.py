@@ -2,6 +2,7 @@
 import pygame
 from PIL import Image
 import Graficos
+import Logica
 import os
 
 # pygame setup
@@ -16,12 +17,11 @@ dt = 0
 """generar cuadro para mover con drag and drop"""
 # Crear las instancias de DraggableImage
 """graficos piezas"""
-p_blancas, p_negras = Graficos.piezas_ajedrez(screen, window_width, window_height)
-images = [
-    Graficos.DraggableImage(p_blancas[0], (100, 100)),
-    Graficos.DraggableImage(p_blancas[1], (300, 200)),
-    # Agrega más imágenes según sea necesario
-]
+piezas_img = Logica.piezas_dict(800,800)
+tablero = Logica.tablero_logico(800,800)
+tablero = Logica.posinicial_fen(tablero)
+
+piezas_en_tablero = Logica.mostrar_piezas(tablero, piezas_img)
 
 
 while running:
@@ -31,15 +31,15 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         # Pasar el evento a cada imagen / movimiento
-        for img in images:
-            img.handle_event(event)
+        for evento in piezas_en_tablero:
+            evento.handle_event(event, window_width, window_height)
 
     """generar el tablero"""
     Graficos.dibujar_tablero(screen, window_width, window_height)
 
     """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
     # Dibujar cada imagen
-    for img in images:
+    for img in piezas_en_tablero:
         img.draw(screen)
 
 
