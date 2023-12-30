@@ -6,18 +6,16 @@ import os
 
 # pygame setup
 pygame.init()
-window_width = 800
-window_height = 800
-screen = pygame.display.set_mode((window_width, window_height))
+window_size = 800
+screen = pygame.display.set_mode((window_size, window_size))
 clock = pygame.time.Clock()
 running = True
 dt = 0
 
 """generar cuadro para mover con drag and drop"""
-# Crear las instancias de DraggableImage
 """graficos piezas"""
-piezas_img = Piezas.piezas_dict(800,800)
-tablero = Tablero.tablero_logico(800,800)
+piezas_img = Piezas.piezas_dict(window_size)
+tablero = Tablero.tablero_logico(window_size)
 tablero = Tablero.posinicial_fen(tablero)
 
 piezas_en_tablero = Piezas.mostrar_piezas(tablero, piezas_img)
@@ -31,17 +29,19 @@ while running:
             running = False
         # Pasar el evento a cada imagen / movimiento
         for evento in piezas_en_tablero:
-            evento.handle_event(event, window_width, window_height)
+            evento.handle_event(event, window_size)
             if evento.dragging:
                 evento.bring_to_front(piezas_en_tablero)
 
     """generar el tablero"""
-    Tablero.dibujar_tablero(screen, window_width, window_height)
+    Tablero.dibujar_tablero(screen, window_size)
 
     """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
-    # Dibujar cada imagen
     for img in piezas_en_tablero:
         img.draw(screen)
+
+
+
 
 
     # flip() the display to put your work on screen

@@ -21,7 +21,7 @@ class King(Piezas_general):
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
 
-    def handle_event(self, event, window_width, window_height):
+    def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
                 self.dragging = True
@@ -37,12 +37,12 @@ class King(Piezas_general):
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
                 if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_width or self.rect.y > window_height:
+                        or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
 
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_width // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_height // 8)))
+                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
@@ -61,7 +61,7 @@ class Queen(Piezas_general):
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
 
-    def handle_event(self, event, window_width, window_height):
+    def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
                 self.dragging = True
@@ -77,12 +77,12 @@ class Queen(Piezas_general):
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
                 if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_width or self.rect.y > window_height:
+                        or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
 
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_width // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_height // 8)))
+                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
@@ -101,7 +101,7 @@ class Bishop(Piezas_general):
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
 
-    def handle_event(self, event, window_width, window_height):
+    def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
                 self.dragging = True
@@ -117,12 +117,12 @@ class Bishop(Piezas_general):
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
                 if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_width or self.rect.y > window_height:
+                        or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
 
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_width // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_height // 8)))
+                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
@@ -141,7 +141,7 @@ class Knight(Piezas_general):
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
 
-    def handle_event(self, event, window_width, window_height):
+    def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
                 self.dragging = True
@@ -157,12 +157,12 @@ class Knight(Piezas_general):
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
                 if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_width or self.rect.y > window_height:
+                        or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
 
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_width // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_height // 8)))
+                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
@@ -181,7 +181,7 @@ class Rook(Piezas_general):
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
 
-    def handle_event(self, event, window_width, window_height):
+    def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
                 self.dragging = True
@@ -197,12 +197,12 @@ class Rook(Piezas_general):
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
                 if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_width or self.rect.y > window_height:
+                        or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
 
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_width // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_height // 8)))
+                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
@@ -222,7 +222,7 @@ class Pawn(Piezas_general):
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
 
-    def handle_event(self, event, window_width, window_height):
+    def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
                 self.dragging = True
@@ -238,12 +238,12 @@ class Pawn(Piezas_general):
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
                 if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_width or self.rect.y > window_height:
+                        or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
 
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_width // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_height // 8)))
+                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
         elif event.type == pygame.MOUSEMOTION:
@@ -289,9 +289,9 @@ def pieza_de_piezas(image_path, chunk_width, chunk_height, new_size=None):
     return chunks
 
 
-def piezas_ajedrez(window_width, window_height):
+def piezas_ajedrez(window_size):
     piezas = pieza_de_piezas('images/piezas.png', chunk_width=334, chunk_height=334,
-                             new_size=(window_width / 8, window_height / 8))
+                             new_size=(window_size / 8, window_size / 8))
     blancas = []
     negras = []
     for i, pieza in enumerate(piezas):
@@ -301,8 +301,8 @@ def piezas_ajedrez(window_width, window_height):
             negras.append(pieza)
     return blancas, negras
 
-def piezas_dict(window_width, window_height):
-    p_blancas, p_negras = piezas_ajedrez(window_width, window_height)
+def piezas_dict(window_size):
+    p_blancas, p_negras = piezas_ajedrez(window_size)
     piezas = {
        "k": p_negras[0],
        "q": p_negras[1],
