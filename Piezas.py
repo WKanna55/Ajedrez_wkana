@@ -1,8 +1,17 @@
 import pygame
 from PIL import Image
 
+class Piezas_general:
+    def bring_to_front(self, images):
+        """ Mueve esta imagen al frente de la lista. """
+        images.remove(self)
+        images.append(self)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+
 #piezas y movimientos
-class King:
+class King(Piezas_general):
     def __init__(self, image, position):
         self.image = image
         self.rect = image.get_rect(topleft=position)
@@ -42,10 +51,7 @@ class King:
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-class Queen:
+class Queen(Piezas_general):
     def __init__(self, image, position):
         self.image = image
         self.rect = image.get_rect(topleft=position)
@@ -85,10 +91,7 @@ class Queen:
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-class Bishop:
+class Bishop(Piezas_general):
     def __init__(self, image, position):
         self.image = image
         self.rect = image.get_rect(topleft=position)
@@ -128,10 +131,7 @@ class Bishop:
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-class Knight:
+class Knight(Piezas_general):
     def __init__(self, image, position):
         self.image = image
         self.rect = image.get_rect(topleft=position)
@@ -171,10 +171,7 @@ class Knight:
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-class Rook:
+class Rook(Piezas_general):
     def __init__(self, image, position):
         self.image = image
         self.rect = image.get_rect(topleft=position)
@@ -215,10 +212,7 @@ class Rook:
                 self.rect.y = mouse_y + self.offset_y
                 print("moving rook")
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
-
-class Pawn:
+class Pawn(Piezas_general):
     def __init__(self, image, position):
         self.image = image
         self.rect = image.get_rect(topleft=position)
@@ -258,8 +252,7 @@ class Pawn:
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
 
-    def draw(self, surface):
-        surface.blit(self.image, self.rect)
+
 
 def obtain_piece(image, position, piece_char):
     piece_char = piece_char.lower()

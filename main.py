@@ -32,6 +32,8 @@ while running:
         # Pasar el evento a cada imagen / movimiento
         for evento in piezas_en_tablero:
             evento.handle_event(event, window_width, window_height)
+            if evento.dragging:
+                evento.bring_to_front(piezas_en_tablero)
 
     """generar el tablero"""
     Tablero.dibujar_tablero(screen, window_width, window_height)
