@@ -3,6 +3,7 @@ import pygame
 from PIL import Image
 import Graficos
 import Logica
+import Piezas
 import os
 
 # pygame setup

@@ -1,6 +1,7 @@
 import pygame
 import random
 import Graficos
+import Piezas
 
 def tablero_logico(window_width, window_height):
     tablero = []
@@ -56,13 +57,13 @@ def mostrar_piezas(tablero_ordenado, piezas_img):
         for j in i:
             for k, v in j.items():
                 if k != "":
-                    piezas_pos.append(Graficos.DraggableImage(piezas_img[k], v))
+                    piezas_pos.append(Piezas.Piezas().obtain_piece(piezas_img[k], v, k))
     return piezas_pos
 
 
-piezas_img = piezas_dict(800,800)
-tablero = tablero_logico(800,800)
-tablero = posinicial_fen(tablero)
-
-piezas_en_tablero = mostrar_piezas(tablero, piezas_img)
-print(piezas_en_tablero)
+#piezas_img = piezas_dict(800,800)
+#tablero = tablero_logico(800,800)
+#tablero = posinicial_fen(tablero)
+#
+#piezas_en_tablero = mostrar_piezas(tablero, piezas_img)
+#print(piezas_en_tablero)
