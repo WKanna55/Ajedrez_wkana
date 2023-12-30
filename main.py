@@ -13,7 +13,16 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+"""generar cuadro para mover con drag and drop"""
+# Crear las instancias de DraggableImage
+"""graficos piezas"""
+p_blancas, p_negras = Graficos.piezas_ajedrez(screen, window_width, window_height)
+images = [
+    Graficos.DraggableImage(p_blancas[0], (100, 100)),
+    Graficos.DraggableImage(p_blancas[1], (300, 200)),
+    # Agrega más imágenes según sea necesario
+]
+
 
 while running:
     # poll for events
@@ -21,30 +30,18 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        # Pasar el evento a cada imagen / movimiento
+        for img in images:
+            img.handle_event(event)
 
-    # fill the screen with a color to wipe away anything from last frame
-    #screen.fill("purple")
-
-    #generar el tablero
+    """generar el tablero"""
     Graficos.dibujar_tablero(screen, window_width, window_height)
 
-    # graficos piezas
-    p_blancas, p_negras = Graficos.piezas_ajedrez(screen, window_width, window_height)
-    screen.blit(p_negras[0], (0, 700))
+    """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
+    # Dibujar cada imagen
+    for img in images:
+        img.draw(screen)
 
-
-
-    pygame.draw.circle(screen, "red", player_pos, 40)
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
-        player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        player_pos.x += 300 * dt
 
     # flip() the display to put your work on screen
     pygame.display.flip()
