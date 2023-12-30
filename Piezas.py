@@ -10,7 +10,7 @@ class Piezas_general:
         self.offset_y = 0
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
-        
+
     def bring_to_front(self, images):
         """ Mueve esta imagen al frente de la lista. """
         images.remove(self)
@@ -21,8 +21,6 @@ class Piezas_general:
 
 #piezas y movimientos
 class King(Piezas_general):
-
-
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
