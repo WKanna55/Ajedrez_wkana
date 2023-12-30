@@ -2,6 +2,28 @@ import pygame
 import random
 import Piezas
 
+class Tablero:
+    def __init__(self, window_size, color1, color2):
+        self.window_size = window_size
+        self. color1 = color1
+        self.color2 = color2
+        self.tablero_logico = tablero_logico(self.window_size)
+        self.tablero_logico = posinicial_fen(self.tablero_logico)
+
+    def mov_piece(self):
+        #is valid = True
+        x = 150
+        y = 47
+        vect_click = [x,y]
+        x1 = 46
+        y1 = 265
+        vect_drag_pull = [x1, y1]
+        
+
+
+
+
+
 
 #tablero ajedrez
 def dibujar_tablero(screen, window_size):
@@ -53,10 +75,5 @@ def posinicial_fen(tablero_log):
             j += 1
     return tablero_log
 
-
-#piezas_img = piezas_dict(800,800)
-#tablero = tablero_logico(800,800)
-#tablero = posinicial_fen(tablero)
-#
-#piezas_en_tablero = mostrar_piezas(tablero, piezas_img)
-#print(piezas_en_tablero)
+nuevo_tab = Tablero(800, "black", "white")
+print(nuevo_tab.tablero_logico)

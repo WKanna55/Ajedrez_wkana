@@ -246,6 +246,7 @@ class Pawn(Piezas_general):
                 self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
                 self.dragging = False
 
+
         elif event.type == pygame.MOUSEMOTION:
             if self.dragging:
                 mouse_x, mouse_y = event.pos
