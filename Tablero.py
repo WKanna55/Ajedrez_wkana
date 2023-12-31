@@ -45,9 +45,9 @@ class Tablero:
         tablero = []
         for i in range(8):
             tablero.append([])
-            for j in range(8):
+            for j in range(8):          # j = x : horizontal , i = y : vertical
                 tablero[i].append({"": (j * (window_size // 8), i * (window_size // 8))})
-
+        print(tablero)
         return tablero
 
     @staticmethod

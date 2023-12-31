@@ -12,7 +12,7 @@ class Piezas_general:
         self.pos_y_anterior = 0
 
     def bring_to_front(self, images):
-        """ Mueve esta imagen al frente de la lista. """
+        """ Mueve esta pieza al frente de la lista. """
         images.remove(self)
         images.append(self)
 
@@ -24,6 +24,7 @@ class King(Piezas_general):
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
+                # movimiento libre de la pieza
                 self.dragging = True
                 mouse_x, mouse_y = event.pos
                 self.offset_x = self.rect.x - mouse_x
@@ -33,6 +34,7 @@ class King(Piezas_general):
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
+                # posicionamiento de la pieza
                 self.rect.x += 50
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
@@ -149,6 +151,7 @@ class Rook(Piezas_general):
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1 and self.rect.collidepoint(event.pos):
+                # click pieza
                 self.dragging = True
                 mouse_x, mouse_y = event.pos
                 self.offset_x = self.rect.x - mouse_x
@@ -158,6 +161,7 @@ class Rook(Piezas_general):
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
+                # posicion pieza
                 self.rect.x += 50
                 self.rect.y += 50
                 # condicion si la ficha sale del tablero
@@ -172,10 +176,21 @@ class Rook(Piezas_general):
 
         elif event.type == pygame.MOUSEMOTION:
             if self.dragging:
+                # arrastre
                 mouse_x, mouse_y = event.pos
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
                 print("moving rook")
+        def mov_piece(tablero, destino, origen):
+            if is_mov_valid(destino, origen):
+                dest = tablero[destino[0]//100][destino[1]//100]
+
+            return tablero
+
+
+        def is_mov_valid(destino, origen):
+            return True
+
 
 class Pawn(Piezas_general):
     def handle_event(self, event, window_size):
@@ -274,8 +289,8 @@ def piezas_dict(window_size):
        "P": p_blancas[5]
        # Agrega más imágenes según sea necesario
     }
-
     return piezas
+
 def mostrar_piezas(tablero_ordenado, piezas_img):
     piezas_pos = []
     for i in tablero_ordenado:
