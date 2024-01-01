@@ -15,10 +15,9 @@ dt = 0
 """generar cuadro para mover con drag and drop"""
 """graficos piezas"""
 piezas_img = Piezas.piezas_dict(window_size)
-#tablero = Tablero.tablero_logico(window_size)
-#tablero = Tablero.posinicial_fen(tablero)
 
-tableromain = Tablero(screen, window_size, "black", "white")
+
+tableromain = Tablero(screen, window_size, "purple", "pink")
 
 piezas_en_tablero = Piezas.mostrar_piezas(tableromain.tablero_logico, piezas_img)
 
@@ -42,8 +41,6 @@ while running:
     """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
     for img in piezas_en_tablero:
         img.draw(screen)
-
-
 
 
 

@@ -6,19 +6,19 @@ class Tablero:
     def __init__(self, screen, window_size, color1, color2):
         self.screen = screen
         self.window_size = window_size
-        self. color1 = color1
+        self.color1 = color1
         self.color2 = color2
         self.tablero_logico = Tablero.tablero_logico(self.window_size)
         self.tablero_logico = Tablero.posinicial_fen(self.tablero_logico)
 
-    def mov_piece(self):
-        #is valid = True
-        x = 150
-        y = 47
-        vect_click = [x,y]
-        x1 = 46
-        y1 = 265
-        vect_drag_pull = [x1, y1]
+    #def mov_piece(self):
+    #    #is valid = True
+    #    x = 150
+    #    y = 47
+    #    vect_click = [x,y]
+    #    x1 = 46
+    #    y1 = 265
+    #    vect_drag_pull = [x1, y1]
 
     def dibujar_tablero(self):
         fila = 0
@@ -27,10 +27,10 @@ class Tablero:
         for i in range(8):
             for j in range(8):
                 if blanco:
-                    pygame.draw.rect(self.screen, "purple", (columna, fila, self.window_size / 8, self.window_size / 8))
+                    pygame.draw.rect(self.screen, self.color1, (columna, fila, self.window_size / 8, self.window_size / 8))
                     blanco = False
                 else:
-                    pygame.draw.rect(self.screen, "pink", (columna, fila, self.window_size / 8, self.window_size / 8))
+                    pygame.draw.rect(self.screen, self.color2, (columna, fila, self.window_size / 8, self.window_size / 8))
                     blanco = True
                 columna += self.window_size / 8
             if blanco:
@@ -47,7 +47,6 @@ class Tablero:
             tablero.append([])
             for j in range(8):          # j = x : horizontal , i = y : vertical
                 tablero[i].append({"": (j * (window_size // 8), i * (window_size // 8))})
-        print(tablero)
         return tablero
 
     @staticmethod

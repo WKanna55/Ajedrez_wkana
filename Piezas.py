@@ -2,7 +2,7 @@ import pygame
 from PIL import Image
 
 class Piezas_general:
-    def __init__(self, image, position):
+    def __init__(self, image, position, tablero):
         self.image = image
         self.rect = image.get_rect(topleft=position)
         self.dragging = False
@@ -10,6 +10,7 @@ class Piezas_general:
         self.offset_y = 0
         self.pos_x_anterior = 0
         self.pos_y_anterior = 0
+        self.tablero = tablero
 
     def bring_to_front(self, images):
         """ Mueve esta pieza al frente de la lista. """
@@ -159,6 +160,7 @@ class Rook(Piezas_general):
                 self.pos_x_anterior = self.rect.x
                 self.pos_y_anterior = self.rect.y
 
+
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 # posicion pieza
@@ -172,7 +174,10 @@ class Rook(Piezas_general):
 
                 self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
                 self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
+
+                self.tablero = Rook.mov_piece(self, (self.rect.x, self.rect.y), (self.pos_x_anterior, self.pos_y_anterior))
                 self.dragging = False
+
 
         elif event.type == pygame.MOUSEMOTION:
             if self.dragging:
@@ -180,16 +185,40 @@ class Rook(Piezas_general):
                 mouse_x, mouse_y = event.pos
                 self.rect.x = mouse_x + self.offset_x
                 self.rect.y = mouse_y + self.offset_y
-                print("moving rook")
-        def mov_piece(tablero, destino, origen):
-            if is_mov_valid(destino, origen):
-                dest = tablero[destino[0]//100][destino[1]//100]
+                #print("moving rook")
 
-            return tablero
+    def mov_piece(self, destino, origen):
+
+        # Solo mover la pieza si está siendo arrastrada
+        if self.dragging and Rook.is_mov_valid(self, destino, origen):
+            indice_origen_y = origen[1] // 100
+            indice_origen_x = origen[0] // 100
+            indice_destino_y = destino[1] // 100
+            indice_destino_x = destino[0] // 100
+
+            print(indice_origen_y)
+            print(indice_origen_x)
+            print(indice_destino_y)
+            print(indice_destino_x)
 
 
-        def is_mov_valid(destino, origen):
-            return True
+            # Acceder directamente a los elementos en self.tablero
+            origen_tab = self.tablero[indice_origen_y][indice_origen_x]
+            destino_tab = self.tablero[indice_destino_y][indice_destino_x]
+
+            # Intercambiar las posiciones de las piezas en el tablero
+            self.tablero[indice_origen_y][indice_origen_x], self.tablero[indice_destino_y][
+                indice_destino_x] = destino_tab, origen_tab
+
+            print("Tablero actualizado:")
+            print(self.tablero)
+
+        return self.tablero
+
+
+    def is_mov_valid(self, destino, origen):
+
+        return True
 
 
 class Pawn(Piezas_general):
@@ -225,15 +254,15 @@ class Pawn(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
 
 
-def obtain_piece(image, position, piece_char):
+def obtain_piece(image, position, piece_char, tablero):
     piece_char = piece_char.lower()
     pieza_retorno = {
-        "k": King(image, position),
-        "q": Queen(image, position),
-        "b": Bishop(image, position),
-        "n": Knight(image, position),
-        "r": Rook(image, position),
-        "p": Pawn(image, position)
+        "k": King(image, position, tablero),
+        "q": Queen(image, position, tablero),
+        "b": Bishop(image, position, tablero),
+        "n": Knight(image, position, tablero),
+        "r": Rook(image, position, tablero),
+        "p": Pawn(image, position, tablero)
     }
 
     return pieza_retorno[piece_char]
@@ -297,5 +326,6 @@ def mostrar_piezas(tablero_ordenado, piezas_img):
         for j in i:
             for k, v in j.items():
                 if k != "":
-                    piezas_pos.append(obtain_piece(piezas_img[k], v, k))
+                    piezas_pos.append(obtain_piece(piezas_img[k], v, k, tablero_ordenado))
     return piezas_pos
+
