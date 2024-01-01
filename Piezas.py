@@ -171,12 +171,16 @@ class Rook(Piezas_general):
                         or self.rect.x > window_size or self.rect.y > window_size:
                     self.rect.x = self.pos_x_anterior
                     self.rect.y = self.pos_y_anterior
+                    self.dragging = False
 
                 self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
                 self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
 
-                self.tablero = Rook.mov_piece(self, (self.rect.x, self.rect.y), (self.pos_x_anterior, self.pos_y_anterior))
+                self.tablero = Rook.mov_piece(self, (self.rect.x, self.rect.y),
+                                    (self.pos_x_anterior, self.pos_y_anterior))
                 self.dragging = False
+
+
 
 
         elif event.type == pygame.MOUSEMOTION:
@@ -196,12 +200,6 @@ class Rook(Piezas_general):
             indice_destino_y = destino[1] // 100
             indice_destino_x = destino[0] // 100
 
-            print(indice_origen_y)
-            print(indice_origen_x)
-            print(indice_destino_y)
-            print(indice_destino_x)
-
-
             # Acceder directamente a los elementos en self.tablero
             origen_tab = self.tablero[indice_origen_y][indice_origen_x]
             destino_tab = self.tablero[indice_destino_y][indice_destino_x]
@@ -218,7 +216,20 @@ class Rook(Piezas_general):
 
     def is_mov_valid(self, destino, origen):
 
-        return True
+        # Solo mover la pieza si está siendo arrastrada
+        if self.dragging:
+            indice_origen_y = origen[1] // 100
+            indice_origen_x = origen[0] // 100
+            indice_destino_y = destino[1] // 100
+            indice_destino_x = destino[0] // 100
+
+
+            if indice_origen_y == indice_destino_y:
+                return True
+            elif indice_origen_x == indice_destino_x:
+                return True
+            else:
+                return False
 
 
 class Pawn(Piezas_general):
