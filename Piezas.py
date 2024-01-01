@@ -163,22 +163,22 @@ class Rook(Piezas_general):
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
-                # posicion pieza
-                self.rect.x += 50
-                self.rect.y += 50
-                # condicion si la ficha sale del tablero
-                if self.rect.x < 0 or self.rect.y < 0 \
-                        or self.rect.x > window_size or self.rect.y > window_size:
-                    self.rect.x = self.pos_x_anterior
-                    self.rect.y = self.pos_y_anterior
-                    self.dragging = False
-
-                self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
-                self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
-
-                self.tablero = Rook.mov_piece(self, (self.rect.x, self.rect.y),
-                                    (self.pos_x_anterior, self.pos_y_anterior))
-                self.dragging = False
+                Rook.mov_piece(self, window_size)
+                ## posicion pieza
+                #self.rect.x += 50
+                #self.rect.y += 50
+                ## condicion si la ficha sale del tablero
+                #if self.rect.x < 0 or self.rect.y < 0 \
+                #        or self.rect.x > window_size or self.rect.y > window_size:
+                #    self.rect.x = self.pos_x_anterior
+                #    self.rect.y = self.pos_y_anterior
+#
+                #self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+                #self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
+#
+                #self.tablero = Rook.actualizar_tablero(self, (self.rect.x, self.rect.y),
+                #                        (self.pos_x_anterior, self.pos_y_anterior))
+                #self.dragging = False
 
 
 
@@ -191,7 +191,33 @@ class Rook(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
                 #print("moving rook")
 
-    def mov_piece(self, destino, origen):
+
+    def mov_piece(self, window_size):
+        self.rect.x += 50
+        self.rect.y += 50
+
+        # condicion si la ficha sale del tablero
+        if self.rect.x < 0 or self.rect.y < 0 \
+                or self.rect.x > window_size or self.rect.y > window_size:
+            self.rect.x = self.pos_x_anterior
+            self.rect.y = self.pos_y_anterior
+            self.dragging = False
+
+        self.rect.x = int(self.rect.x - (self.rect.x % (window_size // 8)))
+        self.rect.y = int(self.rect.y - (self.rect.y % (window_size // 8)))
+
+        if Rook.is_mov_valid(self, (self.rect.x, self.rect.y), (self.pos_x_anterior, self.pos_y_anterior)):
+
+            self.tablero = Rook.actualizar_tablero(self, (self.rect.x, self.rect.y),
+                                               (self.pos_x_anterior, self.pos_y_anterior))
+            self.dragging = False
+        else:
+            self.rect.x = self.pos_x_anterior
+            self.rect.y = self.pos_y_anterior
+            self.dragging = False
+
+
+    def actualizar_tablero(self, destino, origen):
 
         # Solo mover la pieza si está siendo arrastrada
         if self.dragging and Rook.is_mov_valid(self, destino, origen):
@@ -210,6 +236,9 @@ class Rook(Piezas_general):
 
             print("Tablero actualizado:")
             print(self.tablero)
+        elif self.dragging:
+
+            print("No se actualizo")
 
         return self.tablero
 
@@ -223,7 +252,7 @@ class Rook(Piezas_general):
             indice_destino_y = destino[1] // 100
             indice_destino_x = destino[0] // 100
 
-
+            #condicion para mover
             if indice_origen_y == indice_destino_y:
                 return True
             elif indice_origen_x == indice_destino_x:
