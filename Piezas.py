@@ -251,6 +251,15 @@ class Rook(Piezas_general):
             else:
                 return False
 
+    def piece_ally(self, origen, destino):
+        pass
+
+    def piece_enemy(self, origen, destino):
+        pass
+
+    def cut_pass_piece(self, origen, destino):
+        pass
+
 class Pawn(Piezas_general):
     def handle_event(self, event, window_size):
         if event.type == pygame.MOUSEBUTTONDOWN:
