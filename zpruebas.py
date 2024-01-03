@@ -21,5 +21,13 @@ destino = {"": 5}
 origen = {destino_key: origen_value}
 destino = {origen_key: destino_value}
 
-print("origen:", origen)
-print("destino:", destino)
+#print("origen:", origen)
+#print("destino:", destino)
+
+for i in range(2,5+1):
+    for j in range(3,3+1):
+        print(f"i: {i} | j: {j}")
+
+#cadena = "R"
+#
+#print(cadena.islower())

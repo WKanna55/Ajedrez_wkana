@@ -194,6 +194,7 @@ class Rook(Piezas_general):
 
             self.tablero = self.actualizar_tablero((self.rect.x, self.rect.y),
                                                (self.pos_x_anterior, self.pos_y_anterior))
+
             self.dragging = False
         elif self.dragging:
             self.rect.x = self.pos_x_anterior
@@ -213,20 +214,21 @@ class Rook(Piezas_general):
             # Acceder directamente a los elementos en self.tablero
             origen_tab = self.tablero[indice_origen_y][indice_origen_x]
             destino_tab = self.tablero[indice_destino_y][indice_destino_x]
-            print(origen_tab)
-            print(destino_tab)
+            #print(origen_tab)
+            #print(destino_tab)
 
             origen_tab_key, origen_tab_value = next(iter(origen_tab.items()))
             destino_tab_key, destino_tab_value = next(iter(destino_tab.items()))
 
-
+            # pruebas
+            print(self.piece_ally(destino, origen))
 
             self.tablero[indice_origen_y][indice_origen_x][destino_tab_key] = self.tablero[indice_origen_y][indice_origen_x].pop(origen_tab_key)
             self.tablero[indice_destino_y][indice_destino_x][origen_tab_key] = self.tablero[indice_destino_y][indice_destino_x].pop(destino_tab_key)
+            #print("Tablero actualizado:")
+            #print(self.tablero)
 
 
-            print("Tablero actualizado:")
-            print(self.tablero)
         elif self.dragging:
 
             print("No se actualizo")
@@ -244,20 +246,43 @@ class Rook(Piezas_general):
             indice_destino_x = destino[0] // 100
 
             #condicion para mover
-            if indice_origen_y == indice_destino_y:
-                return True
-            elif indice_origen_x == indice_destino_x:
-                return True
+            if indice_origen_y == indice_destino_y or indice_origen_x == indice_destino_x:
+                if self.piece_ally(destino, origen):
+                    return True
             else:
                 return False
 
-    def piece_ally(self, origen, destino):
+    def piece_ally(self, destino, origen):
+        if self.dragging:
+            indice_origen_y = origen[1] // 100
+            indice_origen_x = origen[0] // 100
+            indice_destino_y = destino[1] // 100
+            indice_destino_x = destino[0] // 100
+
+            pieza_origen, pos_origen = next(iter(self.tablero[indice_origen_y][indice_origen_x].items()))
+
+            is_black = pieza_origen.islower()
+
+            #print(f"pieza: {pieza_origen} || posicion: {pos_origen} || Negra?: {is_black}")
+
+            bandera = 0
+            for i in range(indice_origen_y+1, indice_destino_y+1):
+                for j in range(indice_origen_x, indice_destino_x+1):
+                    ver_pieza = self.tablero[i][j]
+                    pieza, pos = next(iter(ver_pieza.items()))
+                    if is_black:
+                        if pieza != "":
+                            bandera += 1
+                    else:
+                        if pieza != "":
+                            bandera += 1
+                    #print(ver_pieza)
+            return bandera == 0
+
+    def piece_enemy(self, destino, origen):
         pass
 
-    def piece_enemy(self, origen, destino):
-        pass
-
-    def cut_pass_piece(self, origen, destino):
+    def cut_pass_piece(self, destino, origen):
         pass
 
 class Pawn(Piezas_general):
