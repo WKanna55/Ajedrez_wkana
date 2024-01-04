@@ -28,6 +28,6 @@ for i in range(2,5+1):
     for j in range(3,3+1):
         print(f"i: {i} | j: {j}")
 
-#cadena = "R"
-#
-#print(cadena.islower())
+cadena = "R"
+
+print(cadena.isupper())
