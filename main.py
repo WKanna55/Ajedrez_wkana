@@ -20,7 +20,7 @@ piezas_img = Piezas.piezas_dict(window_size)
 tableromain = Tablero(screen, window_size, "purple", "pink")
 
 piezas_en_tablero = Piezas.mostrar_piezas(tableromain.tablero_logico, piezas_img)
-
+print(piezas_en_tablero)
 
 while running:
     # poll for events
@@ -41,6 +41,7 @@ while running:
     """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
     for img in piezas_en_tablero:
         img.draw(screen)
+
 
 
 

@@ -220,8 +220,8 @@ class Rook(Piezas_general):
             origen_tab_key, origen_tab_value = next(iter(origen_tab.items()))
             destino_tab_key, destino_tab_value = next(iter(destino_tab.items()))
 
-            # pruebas
-            print(self.piece_ally(destino, origen))
+            # pruebas borrar
+            #print(self.piece_ally(destino, origen))
 
             self.tablero[indice_origen_y][indice_origen_x][destino_tab_key] = self.tablero[indice_origen_y][indice_origen_x].pop(origen_tab_key)
             self.tablero[indice_destino_y][indice_destino_x][origen_tab_key] = self.tablero[indice_destino_y][indice_destino_x].pop(destino_tab_key)
@@ -247,7 +247,9 @@ class Rook(Piezas_general):
 
             #condicion para mover
             if indice_origen_y == indice_destino_y or indice_origen_x == indice_destino_x:
-                if self.piece_ally(destino, origen):
+                if self.piece_ally(destino, origen): # si la pieza es aliada
+                    return False
+                else:
                     return True
             else:
                 return False
@@ -259,6 +261,10 @@ class Rook(Piezas_general):
             indice_destino_y = destino[1] // 100
             indice_destino_x = destino[0] // 100
 
+            print(f"origeny: {indice_origen_y} || origenx: {indice_origen_x}\ndestinoy: {indice_destino_y} || destinox: {indice_destino_x}")
+            print()
+
+
             pieza_origen, pos_origen = next(iter(self.tablero[indice_origen_y][indice_origen_x].items()))
 
             is_black = pieza_origen.islower()
@@ -266,18 +272,56 @@ class Rook(Piezas_general):
             #print(f"pieza: {pieza_origen} || posicion: {pos_origen} || Negra?: {is_black}")
 
             bandera = 0
-            for i in range(indice_origen_y+1, indice_destino_y+1):
-                for j in range(indice_origen_x, indice_destino_x+1):
-                    ver_pieza = self.tablero[i][j]
-                    pieza, pos = next(iter(ver_pieza.items()))
-                    if is_black:
-                        if pieza != "":
-                            bandera += 1
+            if indice_origen_y <= indice_destino_y:
+                for i in range(indice_origen_y+1, indice_destino_y+1):
+                    if indice_origen_x <= indice_destino_x:
+                        for j in range(indice_origen_x, indice_destino_x+1):
+                            ver_pieza = self.tablero[i][j]
+                            pieza, pos = next(iter(ver_pieza.items()))
+                            if is_black:
+                                if pieza != "":
+                                    bandera += 1
+                            else:
+                                if pieza != "":
+                                    bandera += 1
+                        #print(ver_pieza)
                     else:
-                        if pieza != "":
-                            bandera += 1
-                    #print(ver_pieza)
-            return bandera == 0
+                        for j in range(indice_destino_x, indice_origen_x+1):
+                            ver_pieza = self.tablero[i][j]
+                            pieza, pos = next(iter(ver_pieza.items()))
+                            if is_black:
+                                if pieza != "":
+                                    bandera += 1
+                            else:
+                                if pieza != "":
+                                    bandera += 1
+                        #print(ver_pieza)
+            else:
+                for i in range(indice_destino_y+1, indice_origen_y):
+                    if indice_origen_x <= indice_destino_x:
+                        for j in range(indice_origen_x, indice_destino_x+1):
+                            ver_pieza = self.tablero[i][j]
+                            pieza, pos = next(iter(ver_pieza.items()))
+                            if is_black:
+                                if pieza != "":
+                                    bandera += 1
+                            else:
+                                if pieza != "":
+                                    bandera += 1
+                        #print(ver_pieza)
+                    else:
+                        for j in range(indice_destino_x, indice_origen_x+1):
+                            ver_pieza = self.tablero[i][j]
+                            pieza, pos = next(iter(ver_pieza.items()))
+                            if is_black:
+                                if pieza != "":
+                                    bandera += 1
+                            else:
+                                if pieza != "":
+                                    bandera += 1
+                        #print(ver_pieza)
+
+            return bandera != 0
 
     def piece_enemy(self, destino, origen):
         pass
