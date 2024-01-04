@@ -58,7 +58,7 @@ class Tablero:
 
     @staticmethod
     def posinicial_fen(tablero_log):
-        inicial_fen = "rnbqkbnr/1ppppppp/8/8/8/8/1PPPPPPP/RNBQKBNR"
+        inicial_fen = "rnbqkbnr/1pppppp1/8/8/8/8/1PPPPPP1/RNBQKBNR"
         split_inicial = inicial_fen.split("/")
         for i, fen in enumerate(split_inicial):
             j = 0

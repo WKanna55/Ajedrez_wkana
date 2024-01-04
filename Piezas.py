@@ -243,10 +243,7 @@ class Rook(Piezas_general):
 
             #condicion para mover
             if indice_origen_y == indice_destino_y or indice_origen_x == indice_destino_x:
-                if self.piece_trail(destino, origen): # si la pieza es aliada
-                    return False
-                else:
-                    return True
+                return self.piece_trail(destino, origen)
             else:
                 return False
 
@@ -257,63 +254,71 @@ class Rook(Piezas_general):
             indice_destino_y = destino[1] // 100
             indice_destino_x = destino[0] // 100
 
-            #print(f"origeny: {indice_origen_y} || origenx: {indice_origen_x}\ndestinoy: {indice_destino_y} || destinox: {indice_destino_x}")
+            print(f"origeny: {indice_origen_y} || origenx: {indice_origen_x}\ndestinoy: {indice_destino_y} || destinox: {indice_destino_x}")
             #print()
 
             pieza_origen, pos_origen = next(iter(self.tablero[indice_origen_y][indice_origen_x].items()))
 
-            #print(f"pieza: {pieza_origen} || posicion: {pos_origen} || Negra?: {is_black}")
+            print(f"pieza: {pieza_origen} || posicion: {pos_origen} || Negra?: {pieza_origen.islower()}")
 
 
-            rango_y = abs(indice_origen_y - indice_destino_y) + 1
-            rango_x = abs(indice_origen_x - indice_destino_x) + 1
+            rango_y = abs(indice_destino_y - indice_origen_y) + 1
+            rango_x = abs(indice_destino_x - indice_origen_x) + 1
+            print(f"rangoy: {rango_y} || rangox: {rango_x}")
 
-            for y in range(rango_y):
-                for x in range(rango_x):
-                    ver_pieza = self.tablero[y][x]
-                    pieza, pos = next(iter(ver_pieza.items()))
-                    print(ver_pieza)
+            mov_vertical = indice_origen_x == indice_destino_x
+            mov_horizontal = indice_origen_y == indice_destino_y
 
+            print(f"es vertical: {mov_vertical} || es horizontal: {mov_horizontal}")
 
             bandera_aliado = 0
-            if indice_origen_y <= indice_destino_y:
-                for i in range(indice_origen_y+1, indice_destino_y+1):
-                    if indice_origen_x <= indice_destino_x:
-                        for j in range(indice_origen_x, indice_destino_x+1):
-                            ver_pieza = self.tablero[i][j]
-                            pieza, pos = next(iter(ver_pieza.items()))
-                            if self.piece_ally(pieza, pieza_origen):
-                                print(self.piece_ally(pieza, pieza_origen))
-                                bandera_aliado += 1
-                        #print(ver_pieza)
-                    else:
-                        for j in range(indice_destino_x, indice_origen_x+1):
-                            ver_pieza = self.tablero[i][j]
-                            pieza, pos = next(iter(ver_pieza.items()))
-                            if self.piece_ally(pieza, pieza_origen):
-                                print(self.piece_ally(pieza, pieza_origen))
-                                bandera_aliado += 1
-                        #print(ver_pieza)
-            else:
-                for i in range(indice_destino_y+1, indice_origen_y):
-                    if indice_origen_x <= indice_destino_x:
-                        for j in range(indice_origen_x, indice_destino_x+1):
-                            ver_pieza = self.tablero[i][j]
-                            pieza, pos = next(iter(ver_pieza.items()))
-                            if self.piece_ally(pieza, pieza_origen):
-                                print(self.piece_ally(pieza, pieza_origen))
-                                bandera_aliado += 1
-                        #print(ver_pieza)
-                    else:
-                        for j in range(indice_destino_x, indice_origen_x+1):
-                            ver_pieza = self.tablero[i][j]
-                            pieza, pos = next(iter(ver_pieza.items()))
-                            if self.piece_ally(pieza, pieza_origen):
-                                print(self.piece_ally(pieza, pieza_origen))
-                                bandera_aliado += 1
-                        #print(ver_pieza)
 
-            return bandera_aliado != 0
+            if mov_vertical:
+                if indice_origen_y < indice_destino_y:
+                    for y in range(1, rango_y):
+                        ver_pieza = self.tablero[indice_origen_y+y][indice_destino_x]
+                        pieza, pos = next(iter(ver_pieza.items()))
+                        if self.piece_ally(pieza, pieza_origen):
+                            #print(self.piece_ally(pieza, pieza_origen))
+                            bandera_aliado += 1
+                        print(f"pieza: {pieza}, posicion: {pos}")
+                    print("iteracion completada\n")
+                else:
+                    for y in range(1, rango_y):
+                        iterador_y = max(indice_origen_y, indice_destino_y) - y
+                        print(iterador_y)
+                        ver_pieza = self.tablero[iterador_y][indice_destino_x]
+                        pieza, pos = next(iter(ver_pieza.items()))
+                        if self.piece_ally(pieza, pieza_origen):
+                            #print(self.piece_ally(pieza, pieza_origen))
+                            bandera_aliado += 1
+                        print(f"pieza: {pieza}, posicion: {pos}")
+                    print("iteracion completada\n")
+
+            elif mov_horizontal:
+                if indice_origen_x < indice_destino_x:
+                    for x in range(1, rango_x):
+                        ver_pieza = self.tablero[indice_destino_y][x]
+                        pieza, pos = next(iter(ver_pieza.items()))
+                        if self.piece_ally(pieza, pieza_origen):
+                            #print(self.piece_ally(pieza, pieza_origen))
+                            bandera_aliado += 1
+                        print(f"pieza: {pieza}, posicion: {pos}")
+                    print("iteracion completada\n")
+                else:
+                    for x in range(1, rango_x):
+                        iterador_x = max(indice_origen_x, indice_destino_x) - x
+                        ver_pieza = self.tablero[indice_destino_y][iterador_x]
+                        pieza, pos = next(iter(ver_pieza.items()))
+                        if self.piece_ally(pieza, pieza_origen):
+                            #print(self.piece_ally(pieza, pieza_origen))
+                            bandera_aliado += 1
+                        print(f"pieza: {pieza}, posicion: {pos}")
+                    print("iteracion completada\n")
+
+
+            return bandera_aliado == 0
+
 
     def piece_ally(self, pieza_revisando, pieza_char):
         is_black = pieza_char.islower()

@@ -24,10 +24,16 @@ destino = {origen_key: destino_value}
 #print("origen:", origen)
 #print("destino:", destino)
 
-for i in range(2,5+1):
-    for j in range(3,3+1):
-        print(f"i: {i} | j: {j}")
+#for i in range(2,5+1):
+#    for j in range(3,3+1):
+#        print(f"i: {i} | j: {j}")
+#
+#cadena = "R"
+#
+#print(cadena.isupper())
+destino = 0
+origen = 7
+trazo = -7
 
-cadena = "R"
-
-print(cadena.isupper())
+for i in range(7):
+    print(abs(trazo)-i-1)
