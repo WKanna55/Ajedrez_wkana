@@ -31,9 +31,12 @@ destino = {origen_key: destino_value}
 #cadena = "R"
 #
 #print(cadena.isupper())
-destino = 0
-origen = 7
-trazo = -7
+#destino = 0
+#origen = 7
+#trazo = -7
+#
+#for i in range(7):
+#    print(abs(trazo)-i-1)
 
-for i in range(7):
-    print(abs(trazo)-i-1)
+tuplaa = (0, 100)
+print(tuplaa[1])

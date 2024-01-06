@@ -5,6 +5,7 @@ class Piezas_general:
     def __init__(self, image, position, tablero):
         self.image = image
         self.rect = image.get_rect(topleft=position)
+        print(self.rect)
         self.dragging = False
         self.offset_x = 0
         self.offset_y = 0
@@ -19,6 +20,9 @@ class Piezas_general:
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+
+    def tramo(self):
+        pass
 
 #piezas y movimientos
 class King(Piezas_general):
@@ -243,11 +247,11 @@ class Rook(Piezas_general):
 
             #condicion para mover
             if indice_origen_y == indice_destino_y or indice_origen_x == indice_destino_x:
-                return self.piece_trail(destino, origen)
+                return self.piece_trail_valid(destino, origen)
             else:
                 return False
 
-    def piece_trail(self, destino, origen):
+    def piece_trail_valid(self, destino, origen):
         if self.dragging:
             indice_origen_y = origen[1] // 100
             indice_origen_x = origen[0] // 100
@@ -272,7 +276,7 @@ class Rook(Piezas_general):
             print(f"es vertical: {mov_vertical} || es horizontal: {mov_horizontal}")
 
             bandera_aliado = 0
-
+            bandera_enemigo = 0
             if mov_vertical:
                 if indice_origen_y < indice_destino_y:
                     for y in range(1, rango_y):
@@ -331,7 +335,17 @@ class Rook(Piezas_general):
         return False
 
 
-    def piece_enemy(self, destino, origen):
+    def piece_enemy(self, pieza_revisando, pieza_char):
+        is_black = pieza_char.islower()
+        if is_black:
+            if pieza_revisando.isupper():
+                return True
+        else:
+            if pieza_revisando.islower():
+                return True
+        return False
+
+    def kill_enemy_piece(self, list_pieces, target_pos):
         pass
 
     def cut_pass_piece(self, destino, origen):
@@ -384,7 +398,7 @@ def obtain_piece(image, position, piece_char, tablero):
     return pieza_retorno[piece_char]
 
 
-def pieza_de_piezas(image_path, chunk_width, chunk_height, new_size=None):
+def split_chunks_piezas(image_path, chunk_width, chunk_height, new_size=None):
     image = Image.open(image_path)
     chunks = []
 
@@ -405,9 +419,9 @@ def pieza_de_piezas(image_path, chunk_width, chunk_height, new_size=None):
     return chunks
 
 
-def piezas_ajedrez(window_size):
-    piezas = pieza_de_piezas('images/piezas.png', chunk_width=334, chunk_height=334,
-                             new_size=(window_size / 8, window_size / 8))
+def piezas_ajedrez_img(window_size):
+    piezas = split_chunks_piezas('images/piezas.png', chunk_width=334, chunk_height=334,
+                                 new_size=(window_size / 8, window_size / 8))
     blancas = []
     negras = []
     for i, pieza in enumerate(piezas):
@@ -418,7 +432,7 @@ def piezas_ajedrez(window_size):
     return blancas, negras
 
 def piezas_dict(window_size):
-    p_blancas, p_negras = piezas_ajedrez(window_size)
+    p_blancas, p_negras = piezas_ajedrez_img(window_size)
     piezas = {
        "k": p_negras[0],
        "q": p_negras[1],
@@ -444,4 +458,5 @@ def mostrar_piezas(tablero_ordenado, piezas_img):
                 if k != "":
                     piezas_pos.append(obtain_piece(piezas_img[k], v, k, tablero_ordenado))
     return piezas_pos
+
 

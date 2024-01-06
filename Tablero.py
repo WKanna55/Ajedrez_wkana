@@ -40,6 +40,13 @@ class Tablero:
             columna = 0
             fila += self.window_size / 8
 
+    def dibujar_tramo_pieza(self, pieza_dic, pieza_list):
+        pieza, pos = next(iter(pieza_dic))
+        for i in range(len(pieza_list)):
+            if pieza_list[i].rect.x == pos[1] and pieza_list[i].rect.y == pos[0]:
+                #pieza_list[i].tramo #es una lista con tuplas de posiciones posibles para movimiento
+                pass
+
     @staticmethod
     def tablero_logico(window_size):
         tablero = []
