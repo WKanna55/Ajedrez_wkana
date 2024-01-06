@@ -14,14 +14,10 @@ dt = 0
 
 """generar cuadro para mover con drag and drop"""
 """graficos piezas"""
-piezas_img = Piezas.piezas_dict(window_size)
-
 
 tableromain = Tablero(screen, window_size, "purple", "pink")
 
 piezas = Piezas.Piezas_wrapper('images/piezas.png', window_size, tableromain)
-
-piezas_en_tablero = Piezas.mostrar_piezas(tableromain.tablero_logico, piezas_img)
 
 while running:
     # poll for events
@@ -30,21 +26,17 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         # Pasar el evento a cada imagen / movimiento
-        for evento in piezas_en_tablero:
+        for evento in piezas.piezas_list:
             evento.handle_event(event, window_size)
             if evento.dragging:
-                evento.bring_to_front(piezas_en_tablero)
+                evento.bring_to_front(piezas.piezas_list)
 
     """generar el tablero"""
-    #Tablero.dibujar_tablero(screen, window_size)
     tableromain.dibujar_tablero()
 
     """generar cuadro/imagen drag and drop || Dibujar el cuadro"""
-    for img in piezas_en_tablero:
+    for img in piezas.piezas_list:
         img.draw(screen)
-
-
-
 
     # flip() the display to put your work on screen
     pygame.display.flip()
