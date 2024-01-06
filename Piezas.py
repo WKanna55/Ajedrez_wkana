@@ -395,6 +395,8 @@ class Pawn(Piezas_general):
                 self.rect.y = mouse_y + self.offset_y
 
 
+
+
 def obtain_piece(image, position, piece_char, tablero):
     piece_char = piece_char.lower()
     pieza_retorno = {
@@ -476,4 +478,98 @@ def eliminar_pieza(piezas_list_class, position):
             piezas_list_class.remove(i)
             break
     return piezas_list_class
+
+
+
+
+class Piezas_wrapper:
+    def __init__(self, image_path, window_size, tablero):
+        self.image_path = image_path
+        self.window_size = window_size
+        self.tablero = tablero
+        self.piezas_list = self.inicializar_piezas()
+
+    def split_chunks_piezas(self, chunk_width, chunk_height, new_size=None):
+        image = Image.open(self.image_path)
+        chunks = []
+
+        width, height = image.size
+        for i in range(0, width, chunk_width):
+            for j in range(0, height, chunk_height):
+                box = (i, j, min(i + chunk_width, width), min(j + chunk_height, height))
+                chunk = image.crop(box)
+                mode = chunk.mode
+                size = chunk.size
+                data = chunk.tobytes()
+
+                chunk = pygame.image.fromstring(data, size, mode)
+                if new_size:
+                    chunk = pygame.transform.scale(chunk, new_size)
+                chunks.append(chunk)
+
+        return chunks
+
+    def piezas_ajedrez_img(self):
+        #piezas = split_chunks_piezas('images/piezas.png', chunk_width=334, chunk_height=334,
+        #                             new_size=(self.window_size / 8, self.window_size / 8))
+        piezas = self.split_chunks_piezas( chunk_width=334, chunk_height=334,
+                                     new_size=(self.window_size / 8, self.window_size / 8))
+        blancas = []
+        negras = []
+        for i, pieza in enumerate(piezas):
+            if i % 2 == 0:
+                blancas.append(pieza)
+            else:
+                negras.append(pieza)
+        return blancas, negras
+
+    def piezas_dict(self):
+        p_blancas, p_negras = self.piezas_ajedrez_img()
+        piezas = {
+            "k": p_negras[0],
+            "q": p_negras[1],
+            "b": p_negras[2],
+            "n": p_negras[3],
+            "r": p_negras[4],
+            "p": p_negras[5],
+            "K": p_blancas[0],
+            "Q": p_blancas[1],
+            "B": p_blancas[2],
+            "N": p_blancas[3],
+            "R": p_blancas[4],
+            "P": p_blancas[5]
+            # Agrega más imágenes según sea necesario
+        }
+        return piezas
+
+    def obtain_piece(self, image, position, piece_char):
+        piece_char = piece_char.lower()
+        pieza_retorno = {
+            "k": King(image, position, self.tablero.tablero_logico),
+            "q": Queen(image, position, self.tablero.tablero_logico),
+            "b": Bishop(image, position, self.tablero.tablero_logico),
+            "n": Knight(image, position, self.tablero.tablero_logico),
+            "r": Rook(image, position, self.tablero.tablero_logico),
+            "p": Pawn(image, position, self.tablero.tablero_logico)
+        }
+
+        return pieza_retorno[piece_char]
+
+    def inicializar_piezas(self):
+        piezas_img = self.piezas_dict()
+        piezas_class_list = []
+        for i in self.tablero.tablero_logico:
+            for j in i:
+                for k, v in j.items():
+                    if k != "":
+                        piezas_class_list.append(self.obtain_piece(piezas_img[k], v, k))
+        return piezas_class_list
+
+
+    def eliminar_pieza(self, position):
+        for i in self.piezas_list:
+            if i.rect.y == position[0] and i.rect.x == position[1]:
+                self.piezas_list.remove(i)
+                break
+        return self.piezas_list
 

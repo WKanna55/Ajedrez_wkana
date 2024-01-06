@@ -19,8 +19,9 @@ piezas_img = Piezas.piezas_dict(window_size)
 
 tableromain = Tablero(screen, window_size, "purple", "pink")
 
+piezas = Piezas.Piezas_wrapper('images/piezas.png', window_size, tableromain)
+
 piezas_en_tablero = Piezas.mostrar_piezas(tableromain.tablero_logico, piezas_img)
-print(piezas_en_tablero)
 
 while running:
     # poll for events
