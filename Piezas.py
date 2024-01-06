@@ -285,6 +285,8 @@ class Rook(Piezas_general):
                         if self.piece_ally(pieza, pieza_origen):
                             #print(self.piece_ally(pieza, pieza_origen))
                             bandera_aliado += 1
+                        if self.piece_enemy(pieza, pieza_origen):
+                            bandera_enemigo += 1
                         print(f"pieza: {pieza}, posicion: {pos}")
                     print("iteracion completada\n")
                 else:
@@ -296,6 +298,8 @@ class Rook(Piezas_general):
                         if self.piece_ally(pieza, pieza_origen):
                             #print(self.piece_ally(pieza, pieza_origen))
                             bandera_aliado += 1
+                        if self.piece_enemy(pieza, pieza_origen):
+                            bandera_enemigo += 1
                         print(f"pieza: {pieza}, posicion: {pos}")
                     print("iteracion completada\n")
 
@@ -307,6 +311,8 @@ class Rook(Piezas_general):
                         if self.piece_ally(pieza, pieza_origen):
                             #print(self.piece_ally(pieza, pieza_origen))
                             bandera_aliado += 1
+                        if self.piece_enemy(pieza, pieza_origen):
+                            bandera_enemigo += 1
                         print(f"pieza: {pieza}, posicion: {pos}")
                     print("iteracion completada\n")
                 else:
@@ -317,11 +323,16 @@ class Rook(Piezas_general):
                         if self.piece_ally(pieza, pieza_origen):
                             #print(self.piece_ally(pieza, pieza_origen))
                             bandera_aliado += 1
+                        if self.piece_enemy(pieza, pieza_origen):
+                            bandera_enemigo += 1
                         print(f"pieza: {pieza}, posicion: {pos}")
                     print("iteracion completada\n")
 
+            #if bandera_enemigo == 1:
+            #    self.kill_enemy_piece()
 
-            return bandera_aliado == 0
+
+            return bandera_aliado == 0 and bandera_enemigo <= 1
 
 
     def piece_ally(self, pieza_revisando, pieza_char):
