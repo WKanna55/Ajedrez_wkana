@@ -470,4 +470,10 @@ def mostrar_piezas(tablero_ordenado, piezas_img):
                     piezas_pos.append(obtain_piece(piezas_img[k], v, k, tablero_ordenado))
     return piezas_pos
 
+def eliminar_pieza(piezas_list_class, position):
+    for i in piezas_list_class:
+        if i.rect.y == position[0] and i.rect.x == position[1]:
+            piezas_list_class.remove(i)
+            break
+    return piezas_list_class
 

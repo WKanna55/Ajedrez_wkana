@@ -38,5 +38,19 @@ destino = {origen_key: destino_value}
 #for i in range(7):
 #    print(abs(trazo)-i-1)
 
-tuplaa = (0, 100)
-print(tuplaa[1])
+#tuplaa = (0, 100)
+#print(tuplaa[1])
+
+class Auto:
+    def __init__(self, marca):
+        self.marca = marca
+
+listaxd = [Auto("toyota"), Auto("mitsubishi")]
+print(listaxd)
+cadd = "toyota"
+for i in listaxd:
+    if i.marca == cadd:
+        listaxd.remove(i)
+
+
+print(listaxd)
