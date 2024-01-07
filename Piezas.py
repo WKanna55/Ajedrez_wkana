@@ -2,7 +2,7 @@ import pygame
 from PIL import Image
 
 class Piezas_general:
-    def __init__(self, image, position, tablero, wrapper):
+    def __init__(self, image, position, tablero, wrapper, pieza_char):
         self.image = image
         self.rect = image.get_rect(topleft=position)
         print(self.rect)
@@ -13,6 +13,7 @@ class Piezas_general:
         self.pos_y_anterior = 0
         self.tablero = tablero
         self.wrapper = wrapper
+        self.pieza_char = pieza_char
 
     def bring_to_front(self, images):
         """ Mueve esta pieza al frente de la lista. """
@@ -308,7 +309,7 @@ class Rook(Piezas_general):
             elif mov_horizontal:
                 if indice_origen_x < indice_destino_x:
                     for x in range(1, rango_x):
-                        ver_pieza = self.tablero[indice_destino_y][x]
+                        ver_pieza = self.tablero[indice_destino_y][indice_origen_x+x]
                         pieza, pos = next(iter(ver_pieza.items()))
                         if self.piece_ally(pieza, pieza_origen):
                             #print(self.piece_ally(pieza, pieza_origen))
@@ -331,7 +332,7 @@ class Rook(Piezas_general):
                     print("iteracion completada\n")
 
             if bandera_enemigo == 1:
-                self.wrapper.piezas_list = self.wrapper.eliminar_pieza(pos_destino)
+                self.wrapper.piezas_list = self.wrapper.eliminar_pieza(pos_destino, pieza_destino)
 
 
             return bandera_aliado == 0 and bandera_enemigo <= 1
@@ -460,17 +461,17 @@ class Piezas_wrapper:
         return piezas
 
     def obtain_piece(self, image, position, piece_char):
-        piece_char = piece_char.lower()
+        piece_selector = piece_char.lower()
         pieza_retorno = {
-            "k": King(image, position, self.tablero.tablero_logico, self),
-            "q": Queen(image, position, self.tablero.tablero_logico, self),
-            "b": Bishop(image, position, self.tablero.tablero_logico, self),
-            "n": Knight(image, position, self.tablero.tablero_logico, self),
-            "r": Rook(image, position, self.tablero.tablero_logico, self),
-            "p": Pawn(image, position, self.tablero.tablero_logico, self)
+            "k": King(image, position, self.tablero.tablero_logico, self, piece_char),
+            "q": Queen(image, position, self.tablero.tablero_logico, self, piece_char),
+            "b": Bishop(image, position, self.tablero.tablero_logico, self, piece_char),
+            "n": Knight(image, position, self.tablero.tablero_logico, self, piece_char),
+            "r": Rook(image, position, self.tablero.tablero_logico, self, piece_char),
+            "p": Pawn(image, position, self.tablero.tablero_logico, self, piece_char)
         }
 
-        return pieza_retorno[piece_char]
+        return pieza_retorno[piece_selector]
 
     def inicializar_piezas(self):
         piezas_img = self.piezas_dict()
@@ -483,9 +484,9 @@ class Piezas_wrapper:
         return piezas_class_list
 
 
-    def eliminar_pieza(self, position):
+    def eliminar_pieza(self, position, piece_char):
         for i in self.piezas_list:
-            if i.rect.y == position[1] and i.rect.x == position[0]:
+            if i.rect.y == position[1] and i.rect.x == position[0] and i.pieza_char == piece_char:
                 self.piezas_list.remove(i)
                 break
         return self.piezas_list
