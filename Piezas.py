@@ -254,6 +254,10 @@ class Rook(Piezas_general):
             indice_destino_y = destino[1] // 100
             indice_destino_x = destino[0] // 100
 
+            # condicion si la pieza no se mueve aunque se haya hecho click
+            if indice_origen_y == indice_destino_y and indice_origen_x == indice_destino_x:
+                return False
+
             #condicion para mover
             if indice_origen_y == indice_destino_y or indice_origen_x == indice_destino_x:
                 return self.piece_trail_valid(destino, origen)
