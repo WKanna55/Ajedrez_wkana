@@ -220,16 +220,23 @@ class Rook(Piezas_general):
             # Acceder directamente a los elementos en self.tablero
             origen_tab = self.tablero[indice_origen_y][indice_origen_x]
             destino_tab = self.tablero[indice_destino_y][indice_destino_x]
-            print(origen_tab)
-            print(destino_tab)
+            print(f"origen: {origen_tab} || destino: {destino_tab}")
 
             origen_tab_key, origen_tab_value = next(iter(origen_tab.items()))
             destino_tab_key, destino_tab_value = next(iter(destino_tab.items()))
 
-            self.tablero[indice_origen_y][indice_origen_x][destino_tab_key] = self.tablero[indice_origen_y][indice_origen_x].pop(origen_tab_key)
-            self.tablero[indice_destino_y][indice_destino_x][origen_tab_key] = self.tablero[indice_destino_y][indice_destino_x].pop(destino_tab_key)
-            print("Tablero actualizado:")
-            print(self.tablero)
+            if destino_tab_key == "":
+                self.tablero[indice_origen_y][indice_origen_x][destino_tab_key] = self.tablero[indice_origen_y][indice_origen_x].pop(origen_tab_key)
+                self.tablero[indice_destino_y][indice_destino_x][origen_tab_key] = self.tablero[indice_destino_y][indice_destino_x].pop(destino_tab_key)
+                print("Tablero actualizado, movimiento:")
+                print(self.tablero)
+            else:
+                self.tablero[indice_origen_y][indice_origen_x][""] = self.tablero[indice_origen_y][
+                    indice_origen_x].pop(origen_tab_key)
+                self.tablero[indice_destino_y][indice_destino_x][origen_tab_key] = self.tablero[indice_destino_y][
+                    indice_destino_x].pop(destino_tab_key)
+                print("Tablero actualizado, movimiento y kill:")
+                print(self.tablero)
 
         elif self.dragging:
 
