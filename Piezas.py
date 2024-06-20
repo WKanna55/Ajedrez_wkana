@@ -166,6 +166,9 @@ class Rook(Piezas_general):
                 self.pos_x_anterior = self.rect.x
                 self.pos_y_anterior = self.rect.y
 
+                lol = self.graphic_trail(self.pos_y_anterior//100, self.pos_x_anterior//100, self.pieza_char.islower())
+                print(lol)
+
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
@@ -370,11 +373,38 @@ class Rook(Piezas_general):
                 return True
         return False
 
-    def kill_enemy_piece(self, target_pos):
-        pass
+    def graphic_trail(self, y, x, is_black):
+        result = []
 
-    def cut_pass_piece(self, destino, origen):
-        pass
+        # Función auxiliar para explorar una dirección específica
+        def explore_direction(dy, dx):
+            new_y, new_x = y + dy, x + dx
+            while 0 <= new_y < 8 and 0 <= new_x < 8:
+                pieza, pos = next(iter(self.tablero[new_y][new_x].items()))
+
+                # Si la casilla está vacía, agregarla y continuar en esa dirección
+                if pieza == "":
+                    result.append(pos)
+                else:
+                    # Si es una pieza aliada, detener la búsqueda en esta dirección
+                    if (is_black and pieza.islower()) or (not is_black and pieza.isupper()):
+                        break
+
+                    # Si es una pieza enemiga, agregarla y detener la búsqueda
+                    result.append(pos)
+                    break
+
+                new_y += dy
+                new_x += dx
+
+        # Explorar en las cuatro direcciones
+        explore_direction(1, 0)  # hacia abajo
+        explore_direction(-1, 0)  # hacia arriba
+        explore_direction(0, 1)  # hacia la derecha
+        explore_direction(0, -1)  # hacia la izquierda
+
+        return result
+
 
 class Pawn(Piezas_general):
     def handle_event(self, event, window_size):
